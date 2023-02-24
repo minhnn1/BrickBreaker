@@ -6,7 +6,7 @@ using namespace std;
 //Private functions
 void GameEngine::initVariables()
 {
-	this->videoMode = VideoMode(1000, 800);
+	this->videoMode = VideoMode(1000, 960);
 	this->window = nullptr;
 	this->barriers = nullptr;
 	this->paddle = nullptr;
@@ -21,7 +21,14 @@ void GameEngine::initWindow()
 void GameEngine::initStage()
 {
 	this->paddle = new Paddle(this->window);
-	this->barriers = new Barrier();
+	this->barriers = new Barrier(this->window);
+	for (int i = 0; i < 16; i++)
+	{
+		vector<Brick *> brickLine;
+		for (int j = 0; j < 24; j++)
+			brickLine.push_back(new Brick(Vector2f(i * 60.f + 2.f, j * 25.f + 2.f)));
+		this->bricks.push_back(brickLine);
+	}
 }
 
 //Constructors & Destructors
@@ -63,6 +70,26 @@ void GameEngine::pollEvents()
 	}
 }
 
+void GameEngine::updateBrick()
+{
+			
+}
+
+void GameEngine::renderBrick()
+{
+	for (int i = 0; i < this->bricks.size(); i++)
+	{
+		for (int j = 0; j < this->bricks[i].size(); j++)
+		{
+			if (this->bricks[i][j]->getState() == 0)
+				this->bricks[i].erase(this->bricks[i].begin() + j);
+			else
+				this->bricks[i][j]->render(this->window);
+		}
+	}
+							
+}
+
 void GameEngine::spawnBall()
 {
 	if (this->balls.size() == 0)
@@ -81,7 +108,7 @@ void GameEngine::updateBall()
 	{
 		if (launch_flag)
 			this->balls[i].launch(this->paddle->getSpeed());
-		this->balls[i].update(this->window, this->paddle, this->barriers);
+		this->balls[i].update(this->window, this->paddle, this->barriers, this->bricks);
 		if (this->balls[i].getState() == -1)
 			this->balls.erase(this->balls.begin() + i);
 	}
@@ -102,6 +129,8 @@ void GameEngine::update()
 
 	this->spawnBall();
 	this->updateBall();
+	
+	//this->updateBrick();
 }
 
 void GameEngine::render()
@@ -112,6 +141,7 @@ void GameEngine::render()
 	//Draw game objects
 	this->barriers->render(this->window);
 	this->paddle->render(this->window);
+	this->renderBrick();
 	this->renderBall();
 
 	//Display new frame

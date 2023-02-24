@@ -2,6 +2,7 @@
 #include "pch.h"
 #include "Barrier.h"
 #include "Paddle.h"
+#include "Brick.h"
 
 class Ball
 {
@@ -9,6 +10,7 @@ private:
 	//Variables
 	sf::CircleShape shape;
 	sf::Vector2f velocity;
+	sf::Vector2f maxSpeed;
 	int state; 
 	/*	state of the ball:
 		-1 if the ball is going to be removed
@@ -32,9 +34,12 @@ public:
 	void launch(float xvel);
 	void updateAttached(sf::RectangleShape paddle);
 	void updateDetached();
-	void updateCollision(int flag);
+	void updateCollision(sf::Vector2f vel, int flag);
+	void updateBarriersCollision(Barrier *barriers);
+	void updatePaddleCollision(Paddle *paddles);
+	void updateBricksCollision(std::vector<std::vector<Brick *>> bricks);
 
-	void update(sf::RenderTarget *target, Paddle *paddle, Barrier *barriers);
+	void update(sf::RenderTarget *target, Paddle *paddle, Barrier *barriers, std::vector<std::vector<Brick *>> bricks);
 	void render(sf::RenderTarget *target);
 };
 

@@ -8,13 +8,16 @@ private:
 	sf::RectangleShape leftBar;
 	sf::RectangleShape rightBar;
 	sf::RectangleShape topBar;
+	float size;
 
 	//Private functions
-	void initShape();
-	void initPos();
+	void initVariables();
+	void initShape(sf::RenderTarget *target);
+	void initPos(sf::RenderTarget *target);
+
 public:
 	//Constructors & Destructors
-	Barrier();
+	Barrier(sf::RenderTarget *target);
 	virtual ~Barrier();
 
 	//Functions

@@ -6,6 +6,8 @@ class Paddle
 {
 private:
 	sf::RectangleShape shape;
+	sf::CircleShape leftCir;
+	sf::CircleShape rightCir;
 	float velocity;
 	float acceleration;
 	float maxSpeed;
@@ -21,11 +23,14 @@ public:
 	virtual ~Paddle();
 
 	//Acceessors
+	sf::CircleShape getLeft();
+	sf::CircleShape getRight();
 	sf::RectangleShape getShape();
 	float getSpeed();
 
 	//Functions
-	int checkCollision(sf::FloatRect objBounds);
+	int checkSidesCollision(sf::CircleShape ball);
+	int checkMidCollision(sf::CircleShape ball);
 	void updateCollision(int flag);
 	void updateMovement();
 	
