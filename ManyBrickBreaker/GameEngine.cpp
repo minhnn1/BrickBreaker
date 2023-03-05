@@ -94,7 +94,7 @@ void GameEngine::spawnBall()
 {
 	if (this->balls.size() == 0)
 	{
-		Ball newBall = Ball(this->paddle->getShape(), 1);
+		Ball *newBall = new Ball(this->paddle->getShape(), 0);
 		this->balls.push_back(newBall);
 	}
 }
@@ -107,9 +107,9 @@ void GameEngine::updateBall()
 	for (int i = 0; i < this->balls.size(); i++)
 	{
 		if (launch_flag)
-			this->balls[i].launch(this->paddle->getSpeed());
-		this->balls[i].update(this->window, this->paddle, this->barriers, this->bricks);
-		if (this->balls[i].getState() == -1)
+			this->balls[i]->launch(this->paddle->getSpeed());
+		this->balls[i]->update(this->window, this->paddle, this->barriers, this->bricks);
+		if (this->balls[i]->getState() == -1)
 			this->balls.erase(this->balls.begin() + i);
 	}
 		
@@ -118,7 +118,7 @@ void GameEngine::updateBall()
 void GameEngine::renderBall()
 {
 	for (int i = 0; i < this->balls.size(); i++)
-		this->balls[i].render(this->window);
+		this->balls[i]->render(this->window);
 
 }
 
@@ -142,6 +142,7 @@ void GameEngine::render()
 	this->barriers->render(this->window);
 	this->paddle->render(this->window);
 	this->renderBrick();
+	
 	this->renderBall();
 
 	//Display new frame

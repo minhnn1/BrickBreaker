@@ -11,11 +11,13 @@ private:
 	sf::CircleShape shape;
 	sf::Vector2f velocity;
 	sf::Vector2f maxSpeed;
-	int state; 
+	int state;
 	/*	state of the ball:
 		-1 if the ball is going to be removed
+		0 if the ball is detached 
 		1 if the ball is attached
-		0 if the ball is detached */
+		2 if the ball has collided 
+	*/
 
 	//Private functions
 	void initVariables(int state);

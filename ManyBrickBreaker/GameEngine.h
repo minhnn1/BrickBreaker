@@ -16,7 +16,7 @@ private:
 	//Variables
 	Barrier *barriers;
 	Paddle *paddle;
-	std::vector<Ball> balls;
+	std::vector<Ball *> balls;
 	std::vector<std::vector<Brick *>> bricks;
 
 	//Private functions

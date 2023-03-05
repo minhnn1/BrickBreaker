@@ -24,7 +24,7 @@ public:
 	int getState();
 
 	//Functions
-	int checkCollision(sf::CircleShape ball);
+	int checkCollision(sf::CircleShape ball, int ballState);
 
 	void update();
 	void render(sf::RenderTarget* target);

@@ -12,7 +12,7 @@ void Brick::initShape()
 {
 	this->shape.setFillColor(Color::Magenta);
 	this->shape.setSize(Vector2f(58.f, 23.f));
-	this->shape.setOutlineColor(Color::Yellow);
+	this->shape.setOutlineColor(Color::Black);
 	this->shape.setOutlineThickness(2.f);
 }
 
@@ -32,7 +32,7 @@ Brick::Brick(Vector2f pos)
 
 Brick::~Brick()
 {
-
+	
 }
 
 //Accessors
@@ -42,10 +42,11 @@ int Brick::getState()
 }
 
 //Functions
-int Brick::checkCollision(sf::CircleShape ball)
+int Brick::checkCollision(sf::CircleShape ball, int ballState)
 {
 	FloatRect ballBounds = ball.getGlobalBounds();
 	Vector2f ballCent = ball.getPosition();
+	float ballRad = ball.getRadius();
 
 	FloatRect brickBounds = this->shape.getGlobalBounds();
 	
@@ -55,17 +56,52 @@ int Brick::checkCollision(sf::CircleShape ball)
 		//If the ball hit the top/bottom of the brick (vertical collision)
 		if (brickBounds.contains(ballCent.x, ballBounds.top) || brickBounds.contains(ballCent.x, ballBounds.top + ballBounds.height))
 		{
-			//Marks the brick to remove it later
-			this->state = 0;
+			//Check if the ball has already coliided with another brick
+			if (ballState == 1) 
+				//Marks the brick to remove it later
+				this->state = 0; 
 			return -1;
 		}
-		
+
 		//If the ball hit the left/right side of the brick (horizontal collision)
 		else if (brickBounds.contains(ballBounds.left, ballCent.y) || brickBounds.contains(ballBounds.left + ballBounds.width, ballCent.y))
 		{
-			//Marks the bricks to remove it later
-			this->state = 0;
+			if (ballState == 1)
+				this->state = 0;
 			return 1;
+		}
+
+		//Edge collision
+		//Top left edge
+		else if (pow(ballCent.x - brickBounds.left, 2) + pow(ballCent.y - brickBounds.top, 2) < pow(ballRad, 2))
+		{
+			if (ballState == 1)
+				this->state = 0;
+			return 2;
+		}
+
+		//Top right edge
+		else if (pow(ballCent.x - (brickBounds.left + brickBounds.width), 2) + pow(ballCent.y - brickBounds.top, 2) < pow(ballRad, 2))
+		{
+			if (ballState == 1)
+				this->state = 0;
+			return 2;
+		}
+
+		//Botom left edge
+		else if (pow(ballCent.x - brickBounds.left, 2) + pow(ballCent.y - (brickBounds.top + brickBounds.height), 2) < pow(ballRad, 2))
+		{
+			if (ballState == 1)
+				this->state = 0;
+			return 2;
+		}
+
+		//Bottom right edge
+		else if (pow(ballCent.x - (brickBounds.left + brickBounds.width), 2) + pow(ballCent.y - (brickBounds.top + brickBounds.height), 2) < pow(ballRad, 2))
+		{
+			if (ballState == 1)
+				this->state = 0;
+			return 2;
 		}
 	}
 

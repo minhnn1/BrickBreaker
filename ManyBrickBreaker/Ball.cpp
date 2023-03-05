@@ -47,9 +47,9 @@ int Ball::getState()
 //Functions
 void Ball::launch(float xvel)
 {
-	if (this->state == 1)
+	if (this->state == 0)
 	{
-		this->state = 0;
+		this->state = 1;
 		this->velocity = Vector2f(xvel, -5.f);
 	}	
 }
@@ -66,21 +66,35 @@ void Ball::updateDetached()
 
 void Ball::updateCollision(Vector2f vel, int flag)
 {
+	//If the ball has already collided
+	if (this->state == 2)
+		return;
+	if (flag)
+		cout << flag << " " << this->velocity.x << " " << this->velocity.y << endl;
 	/*
-		Collision flag
+			Collision flag
 		-1 if vertical collision
 		0 if no collision
 		1 if horizontal collision
 		2 if complex collision (circle-to-circle)
 	*/
 	if (flag == 1)
+	{
 		this->velocity.x += 2 * vel.x;
+		this->state = 2;
+	}
+		
 	else if (flag == -1)
+	{
 		this->velocity.y += 2 * vel.y;
+		this->state = 2;
+	}
+		
 	else if (flag == 2)
 	{
 		this->velocity.x += 2 * vel.x;
 		this->velocity.y += 2 * vel.y;
+		this->state = 2;
 	}
 }
 
@@ -111,16 +125,17 @@ void Ball::updateBricksCollision(std::vector<std::vector<Brick *>> bricks)
 {
 	for (int i = 0; i < bricks.size(); i++)
 		for (int j = 0; j < bricks[i].size(); j++)
-			this->updateCollision(-this->velocity, bricks[i][j]->checkCollision(this->shape));
+			this->updateCollision(-this->velocity, bricks[i][j]->checkCollision(this->shape, this->state));
 }
 
 void Ball::update(sf::RenderTarget *target, Paddle *paddle, Barrier *barriers, vector<vector<Brick *>> bricks)
 {
 	//Update the ball's position if it is attached to the paddle
-	if (this->state == 1)
+	if (this->state == 0)
 		this->updateAttached(paddle->getShape());
 	else 
 	{
+		this->state = 1;
 		//DEBUG cout << this->velocity.x << " " << this->velocity.y << endl;
 		
 		//Cap the ball's speed so there will be less bugs =w=
