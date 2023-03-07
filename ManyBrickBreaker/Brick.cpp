@@ -2,12 +2,13 @@
 #include "Brick.h"
 using namespace sf;
 
-void Brick::initVariable()
-{
-	this->state = 1;
-}
 
 //Private functions
+void Brick::initVariable(int state)
+{
+	this->state = state;
+}
+
 void Brick::initShape()
 {
 	this->shape.setFillColor(Color::Magenta);
@@ -23,9 +24,9 @@ void Brick::initPos(Vector2f pos)
 }
 
 //Constructors & Destructors
-Brick::Brick(Vector2f pos)
+Brick::Brick(Vector2f pos, int state)
 {
-	this->initVariable();
+	this->initVariable(state);
 	this->initShape();
 	this->initPos(pos);
 }
@@ -59,7 +60,7 @@ int Brick::checkCollision(sf::CircleShape ball, int ballState)
 			//Check if the ball has already coliided with another brick
 			if (ballState == 1) 
 				//Marks the brick to remove it later
-				this->state = 0; 
+				this->state--; 
 			return -1;
 		}
 
@@ -67,7 +68,7 @@ int Brick::checkCollision(sf::CircleShape ball, int ballState)
 		else if (brickBounds.contains(ballBounds.left, ballCent.y) || brickBounds.contains(ballBounds.left + ballBounds.width, ballCent.y))
 		{
 			if (ballState == 1)
-				this->state = 0;
+				this->state--;
 			return 1;
 		}
 
@@ -76,7 +77,7 @@ int Brick::checkCollision(sf::CircleShape ball, int ballState)
 		else if (pow(ballCent.x - brickBounds.left, 2) + pow(ballCent.y - brickBounds.top, 2) < pow(ballRad, 2))
 		{
 			if (ballState == 1)
-				this->state = 0;
+				this->state--;
 			return 2;
 		}
 
@@ -84,7 +85,7 @@ int Brick::checkCollision(sf::CircleShape ball, int ballState)
 		else if (pow(ballCent.x - (brickBounds.left + brickBounds.width), 2) + pow(ballCent.y - brickBounds.top, 2) < pow(ballRad, 2))
 		{
 			if (ballState == 1)
-				this->state = 0;
+				this->state--;
 			return 2;
 		}
 
@@ -92,7 +93,7 @@ int Brick::checkCollision(sf::CircleShape ball, int ballState)
 		else if (pow(ballCent.x - brickBounds.left, 2) + pow(ballCent.y - (brickBounds.top + brickBounds.height), 2) < pow(ballRad, 2))
 		{
 			if (ballState == 1)
-				this->state = 0;
+				this->state--;
 			return 2;
 		}
 
@@ -100,7 +101,7 @@ int Brick::checkCollision(sf::CircleShape ball, int ballState)
 		else if (pow(ballCent.x - (brickBounds.left + brickBounds.width), 2) + pow(ballCent.y - (brickBounds.top + brickBounds.height), 2) < pow(ballRad, 2))
 		{
 			if (ballState == 1)
-				this->state = 0;
+				this->state--;
 			return 2;
 		}
 	}
@@ -111,7 +112,10 @@ int Brick::checkCollision(sf::CircleShape ball, int ballState)
 
 void Brick::update()
 {
-
+	if (this->state == 1)
+		this->shape.setFillColor(Color::Blue);
+	else if (this->state == 2)
+		this->shape.setFillColor(Color::Red);
 }
 
 void Brick::render(sf::RenderTarget* target)

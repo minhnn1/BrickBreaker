@@ -6,4 +6,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+#include <cstdlib>
+#include <time.h>
 #include "physics.h"

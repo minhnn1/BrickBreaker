@@ -1,23 +1,23 @@
 #pragma once
-class Brick
+class Brick : public PhysicEngine
 {
 private:
 	//Variables
 	sf::RectangleShape shape;
 	int state;
 	/* state of the brick
-		1 if the brick still exists in the stage
 		0 if the brick is going to be removed
+		>= 1 if the brick still exists in the stage
 	 */
 
 	//Private functions
-	void initVariable();
+	void initVariable(int state);
 	void initShape();
 	void initPos(sf::Vector2f pos);
 
 public:
 	//Constructors & Destructors
-	Brick(sf::Vector2f pos);
+	Brick(sf::Vector2f pos, int state);
 	virtual ~Brick();
 
 	//Accessors

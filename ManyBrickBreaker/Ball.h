@@ -4,7 +4,7 @@
 #include "Paddle.h"
 #include "Brick.h"
 
-class Ball
+class Ball : public PhysicEngine
 {
 private:
 	//Variables

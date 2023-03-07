@@ -110,10 +110,9 @@ void Ball::updatePaddleCollision(Paddle *paddle)
 	{
 		Vector2f newVel;
 		if (flag == 2)
-			// ###### remmber to put all of this into a new physics engine class later ########
-			newVel = ctcCollisionHandle(this->shape, this->velocity, paddle->getLeft(), Vector2f(paddle->getSpeed(), 0.f));
+			newVel = CirToCirCollisionHandle(this->shape, this->velocity, paddle->getLeft(), Vector2f(paddle->getSpeed(), 0.f));
 		else if (flag == -2)
-			newVel = ctcCollisionHandle(this->shape, this->velocity, paddle->getRight(), Vector2f(paddle->getSpeed(), 0.f));
+			newVel = CirToCirCollisionHandle(this->shape, this->velocity, paddle->getRight(), Vector2f(paddle->getSpeed(), 0.f));
 		this->updateCollision(newVel, abs(flag));
 		this->shape.move(this->velocity);
 	}

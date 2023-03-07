@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
 
-class Barrier
+class Barrier : public PhysicEngine
 {
 private:
 	//Variables

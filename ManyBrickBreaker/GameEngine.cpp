@@ -26,7 +26,10 @@ void GameEngine::initStage()
 	{
 		vector<Brick *> brickLine;
 		for (int j = 0; j < 24; j++)
-			brickLine.push_back(new Brick(Vector2f(i * 60.f + 2.f, j * 25.f + 2.f)));
+		{
+			int brickType = rand() % (2 - 1 + 1) + 1;
+			brickLine.push_back(new Brick(Vector2f(i * 60.f + 2.f, j * 25.f + 2.f), brickType));
+		}
 		this->bricks.push_back(brickLine);
 	}
 }
@@ -72,11 +75,6 @@ void GameEngine::pollEvents()
 
 void GameEngine::updateBrick()
 {
-			
-}
-
-void GameEngine::renderBrick()
-{
 	for (int i = 0; i < this->bricks.size(); i++)
 	{
 		for (int j = 0; j < this->bricks[i].size(); j++)
@@ -84,10 +82,16 @@ void GameEngine::renderBrick()
 			if (this->bricks[i][j]->getState() == 0)
 				this->bricks[i].erase(this->bricks[i].begin() + j);
 			else
-				this->bricks[i][j]->render(this->window);
+				this->bricks[i][j]->update();
 		}
-	}
-							
+	}		
+}
+
+void GameEngine::renderBrick()
+{
+	for (int i = 0; i < this->bricks.size(); i++)
+		for (int j = 0; j < this->bricks[i].size(); j++)
+				this->bricks[i][j]->render(this->window);					
 }
 
 void GameEngine::spawnBall()
@@ -130,7 +134,7 @@ void GameEngine::update()
 	this->spawnBall();
 	this->updateBall();
 	
-	//this->updateBrick();
+	this->updateBrick();
 }
 
 void GameEngine::render()

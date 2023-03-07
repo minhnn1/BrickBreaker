@@ -2,7 +2,7 @@
 #include "pch.h"
 #include "Barrier.h"
 
-class Paddle
+class Paddle : public PhysicEngine
 {
 private:
 	sf::RectangleShape shape;

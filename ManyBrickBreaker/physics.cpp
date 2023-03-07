@@ -3,35 +3,35 @@
 using namespace sf;
 using namespace std;
 
-float linear_interpolation(float x, float y, float z)
+float PhysicEngine::linear_interpolation(float x, float y, float z)
 {
 	//current speed, max speed, acceleration
 	return ((1.0f - z) * x) + (z * y);
 }
 
-float signnum(float x) {
+float PhysicEngine::signnum(float x) {
 	if (x > 0.0) return 1.0;
 	if (x < 0.0) return -1.0;
 	return x;
 }
 
-Vector2f normalize(Vector2f v)
+Vector2f PhysicEngine::normalize(Vector2f v)
 {
 	float length = sqrt(v.x * v.x + v.y * v.y);
 	return Vector2f(v.x / length, v.y / length);
 }
 
-float dot(Vector2f v1, Vector2f v2)
+float PhysicEngine::dot(Vector2f v1, Vector2f v2)
 {
 	return sqrt(abs(v1.x * v2.x + v1.y * v2.x));
 }
 
-Vector2f multiply(Vector2f v, float f)
+Vector2f PhysicEngine::multiply(Vector2f v, float f)
 {
 	return Vector2f(v.x * f, v.y * f);
 }
 
-bool ctcCollision(CircleShape obj1, CircleShape obj2)
+bool PhysicEngine::CirToCirCollision(CircleShape obj1, CircleShape obj2)
 {
 	Vector2f cir1 = obj1.getPosition();
 	double rad1 = obj1.getRadius();
@@ -44,7 +44,7 @@ bool ctcCollision(CircleShape obj1, CircleShape obj2)
 	return dist < (rad1 + rad2)* (rad1 + rad2);
 }
 
-Vector2f ctcCollisionHandle(CircleShape obj1, Vector2f vel1, CircleShape obj2, Vector2f vel2)
+Vector2f PhysicEngine::CirToCirCollisionHandle(CircleShape obj1, Vector2f vel1, CircleShape obj2, Vector2f vel2)
 {
 	Vector2f cen1 = obj1.getPosition();
 	Vector2f cen2 = obj2.getPosition();
