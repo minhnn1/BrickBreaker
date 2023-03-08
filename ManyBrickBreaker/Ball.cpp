@@ -80,7 +80,10 @@ void Ball::updateCollision(Vector2f vel, int flag)
 	*/
 	if (flag == 1)
 	{
-		this->velocity.x += 2 * vel.x;
+		if (this->velocity.x == 0)
+			this->velocity.y += 2 * vel.y;
+		else
+			this->velocity.x += 2 * vel.x;
 		this->state = 2;
 	}
 		

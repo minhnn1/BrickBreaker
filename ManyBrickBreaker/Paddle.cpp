@@ -84,9 +84,9 @@ int Paddle::checkSidesCollision(sf::CircleShape ball)
 		-2 if hit right side
 		0 if no collision
 	*/
-	if (ctcCollision(this->leftCir, ball))
+	if (CirToCirCollision(this->leftCir, ball))
 		return 2;
-	if (ctcCollision(this->rightCir, ball))
+	if (CirToCirCollision(this->rightCir, ball))
 		return -2;
 	return 0;
 }
