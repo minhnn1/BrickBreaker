@@ -76,27 +76,6 @@ float Paddle::getSpeed()
 	return this->velocity;
 }
 
-int Paddle::checkSidesCollision(sf::CircleShape ball)
-{
-	/*
-		Sides collision flag:
-		2 if hit left side
-		-2 if hit right side
-		0 if no collision
-	*/
-	if (CirToCirCollision(this->leftCir, ball))
-		return 2;
-	if (CirToCirCollision(this->rightCir, ball))
-		return -2;
-	return 0;
-}
-
-int Paddle::checkMidCollision(sf::CircleShape ball)
-{
-	if (this->shape.getGlobalBounds().intersects(ball.getGlobalBounds()))
-		return -1;
-	return 0;
-}
 
 //Functions
 void Paddle::updateCollision(int flag)

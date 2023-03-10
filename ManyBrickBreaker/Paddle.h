@@ -29,8 +29,6 @@ public:
 	float getSpeed();
 
 	//Functions
-	int checkSidesCollision(sf::CircleShape ball);
-	int checkMidCollision(sf::CircleShape ball);
 	void updateCollision(int flag);
 	void updateMovement();
 	

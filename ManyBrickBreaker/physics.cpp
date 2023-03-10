@@ -31,6 +31,7 @@ Vector2f PhysicEngine::multiply(Vector2f v, float f)
 	return Vector2f(v.x * f, v.y * f);
 }
 
+//Collision physics
 bool PhysicEngine::CirToCirCollision(CircleShape obj1, CircleShape obj2)
 {
 	Vector2f cir1 = obj1.getPosition();
@@ -68,4 +69,14 @@ Vector2f PhysicEngine::CirToCirCollisionHandle(CircleShape obj1, Vector2f vel1, 
 
 	cout << endl << endl << endl;
 	return perpendicularVel;
+}
+
+Vector2f PhysicEngine::BallPaddleCollisionHandle(Vector2f vel, CircleShape ball, RectangleShape paddle)
+{
+	if (paddle.getGlobalBounds().intersects(ball.getGlobalBounds()))
+	{
+		vel.x = (ball.getPosition().x - paddle.getPosition().x) / 10;
+		vel.y = -sqrt(25 - vel.x * vel.x);
+	} 
+	return vel;
 }

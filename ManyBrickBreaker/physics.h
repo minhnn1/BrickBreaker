@@ -12,7 +12,8 @@ public:
 	float dot(sf::Vector2f v1, sf::Vector2f v2);
 	sf::Vector2f multiply(sf::Vector2f v, float f);
 
+	//Collision physics
 	bool CirToCirCollision(sf::CircleShape obj1, sf::CircleShape obj2);
 	sf::Vector2f CirToCirCollisionHandle(sf::CircleShape obj1, sf::Vector2f vel1, sf::CircleShape obj2, sf::Vector2f vel2);
-
+	sf::Vector2f BallPaddleCollisionHandle(sf::Vector2f vel, sf::CircleShape ball, sf::RectangleShape paddle);
 };
